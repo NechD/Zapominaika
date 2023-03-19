@@ -1,6 +1,6 @@
 from aiogram import executor
-from work_with_base import *
-from create_bot import dp
+from utils.work_with_base import *
+from utils.create_bot import dp
 
 async def on_startup(_):
     await db_start()
