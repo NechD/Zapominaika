@@ -1,6 +1,6 @@
-from Keyboards import *
+from utils.Keyboards import *
 from aiogram import Dispatcher, types
-from work_with_base import add_user_and_date_in_base
+from utils.work_with_base import add_user_and_date_in_base
 
 async def process_exam_menu(callback: types.CallbackQuery):
     id_1 = callback.message.chat.id

@@ -1,7 +1,7 @@
-from Keyboards import *
+from utils.Keyboards import *
 from aiogram import Dispatcher,  types
-from create_bot import bot
-from work_with_base import add_user_and_date_in_base
+from utils.create_bot import bot
+from utils.work_with_base import add_user_and_date_in_base
 
 # @dp.callback_query_handler(text='examples')
 async def example_call(callback: types.CallbackQuery):

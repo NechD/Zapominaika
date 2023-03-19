@@ -1,11 +1,9 @@
-import emojis
-
-from Keyboards import *
-from work_with_base import *
+from utils.Keyboards import *
+from utils.work_with_base import *
 from aiogram import Dispatcher, types
 from handlers import global_variables as gv
 from aiogram.dispatcher.filters import Text
-from create_bot import bot
+from utils.create_bot import bot
 
 #@dp.message_handler(commands=['start'])
 async def send_welcome1(message: types.Message):

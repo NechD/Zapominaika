@@ -1,8 +1,7 @@
-from Keyboards import *
-from work_with_base import *
+from utils.Keyboards import *
+from utils.work_with_base import *
 from aiogram import Dispatcher, types
-from aiogram.dispatcher.filters import Text
-from create_bot import bot
+from utils.create_bot import bot
 from handlers.FSM import *
 from aiogram.dispatcher import FSMContext
 
