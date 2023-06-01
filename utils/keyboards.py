@@ -1,4 +1,4 @@
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
 import emojis
 
 menu_btn = InlineKeyboardButton('Меню', callback_data='mmenu')
@@ -6,9 +6,9 @@ technic_btn = InlineKeyboardButton(emojis.encode('Техники :school_satchel
 subject_btn = InlineKeyboardButton(emojis.encode('Темы👁'), callback_data='subject1')
 exam_btn = InlineKeyboardButton(emojis.encode('Заниматься :mortar_board:'), callback_data='exam_btn')
 example_btn = InlineKeyboardButton('Примеры📔', callback_data='examples')
-example_1_btn = InlineKeyboardButton('Пример, метод ЦБК', callback_data='example_1')
-example_2_btn = InlineKeyboardButton('Пример, метод синонимов', callback_data='example_2')
-example_3_btn = InlineKeyboardButton('Пример, метод ассоциаций', callback_data='example_3')
+example_cbk = InlineKeyboardButton('Пример, метод ЦБК', callback_data='example_1')
+example_synonym = InlineKeyboardButton('Пример, метод синонимов', callback_data='example_2')
+example_association = InlineKeyboardButton('Пример, метод ассоциаций', callback_data='example_3')
 cancel_btn = InlineKeyboardButton(emojis.encode('Главное меню :x:'), callback_data='cancel1')
 newtrain_btn = InlineKeyboardButton('Тренировка💪', callback_data='newtrain_1')
 go_btn = InlineKeyboardButton(emojis.encode('Начать :white_check_mark:'), callback_data='go1')
@@ -23,19 +23,19 @@ rules_create_btn = InlineKeyboardButton('Создать мнемо-правил�
 rules_create_show_quest_btn = InlineKeyboardButton('Создать мнемо-правило', callback_data='rules_create_show_quest_btn')
 rules_show_questions = InlineKeyboardButton('Ещё примеры', callback_data='rules_create_show_next_btn')
 rules_show_next_rules_btn = InlineKeyboardButton('Ещё правила', callback_data='rules_show_next_rules_btn')
-link_to_site_btn = InlineKeyboardButton('Ещё правила на сайте', url = 'http://zapominayka.bot.tilda.ws/')
+link_to_site_btn = InlineKeyboardButton('Ещё правила на сайте', url='http://zapominayka.bot.tilda.ws/')
 example_1_1btn = InlineKeyboardButton('А поподробнее', callback_data='example_1_1')
 example_1_2btn = InlineKeyboardButton('О, а дальше', callback_data='example_1_2')
 inlineexample_1_1kb = InlineKeyboardMarkup(row_width=1).add(example_1_1btn, cancel_btn)
 inlineexample_1_2kb = InlineKeyboardMarkup(row_width=1).add(example_1_2btn, cancel_btn)
 
-statistics_btn_user =  InlineKeyboardButton('Статистика📈', callback_data='statistics_btn')
+statistics_btn_user = InlineKeyboardButton('Статистика📈', callback_data='statistics_btn')
 
-inline_kb = InlineKeyboardMarkup(row_width=1).add(technic_btn, example_btn, subject_btn, newtrain_btn, rules_btn, statistics_btn_user)  # Главное Меню
+inline_kb = InlineKeyboardMarkup(row_width=1).add(technic_btn, example_btn, subject_btn, newtrain_btn, rules_btn,
+                                                  statistics_btn_user)  # Главное Меню
 inline_kb2 = InlineKeyboardMarkup(row_width=1).add(technic_btn, newtrain_btn, rules_btn)  # Меню после выбора темы
 cancel_kb = InlineKeyboardMarkup(row_width=1).add(cancel_btn)  # Возврат в меню
 technic_kb = InlineKeyboardMarkup(row_width=1).add(link_to_site_btn, cancel_btn)  # Мнемотехники
-
 
 exam_kb = InlineKeyboardMarkup(row_width=1).add(newtrain_btn, rules_btn, cancel_btn)  # Меню начала тренироки
 go_kb = InlineKeyboardMarkup(row_width=1).add(go_btn)  # начать тренировку
@@ -44,44 +44,43 @@ un_correct_ans_kb_yesrule = InlineKeyboardMarkup(row_width=1).add(hint_btn, hint
 un_correct_ans_kb_norule = InlineKeyboardMarkup(row_width=1).add(fast_rule_btn, hint_max_btn, cancel_btn)
 un_correct_max_kb = InlineKeyboardMarkup(row_width=1).add(hint_max_btn)
 continue_kb = InlineKeyboardMarkup(row_width=1).add(continue_btn, cancel_btn)
-rule_kb = InlineKeyboardMarkup(row_width=1).add(rules_create_show_quest_btn, rules_show_btn, cancel_btn)
-rule_kb_2 = InlineKeyboardMarkup(row_width=1).add(rules_create_btn, rules_show_questions,cancel_btn)
-rule_kb_3 = InlineKeyboardMarkup(row_width=1).add(rules_create_btn, rules_show_next_rules_btn,cancel_btn)
-example_kb = InlineKeyboardMarkup(row_width=1).add(example_1_btn, example_2_btn, example_3_btn, cancel_btn)
+rule_kb_main_menu = InlineKeyboardMarkup(row_width=1).add(rules_create_show_quest_btn, rules_show_btn, cancel_btn)
+rule_kb_create_rule = InlineKeyboardMarkup(row_width=1).add(rules_create_btn, rules_show_questions, cancel_btn)
+rule_kb_more_rules = InlineKeyboardMarkup(row_width=1).add(rules_create_btn, rules_show_next_rules_btn, cancel_btn)
+example_kb = InlineKeyboardMarkup(row_width=1).add(example_cbk, example_synonym, example_association, cancel_btn)
 example_kb_1 = InlineKeyboardMarkup(row_width=1).add(example_1_1btn)
 
-
 kb_subjects = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-b1 = KeyboardButton(text= 'страна-столица')
-b2 = KeyboardButton(text= 'даты, история РФ')
-b3 = KeyboardButton(text= 'правовые аббревиатуры')
-b4 = KeyboardButton(text= 'флаг-страна')
-b5 = KeyboardButton(text= 'столица-страна')
-b6 = KeyboardButton(text= 'литературные определения')
-b7 = KeyboardButton(text= 'архитектура, понятия')
-b7_1 =KeyboardButton(text= 'астрономия, понятия')
-kb_subjects.add(b1,b2).add(b3,b4).add(b5, b6).add(b7, b7_1)
+country_capital_btn = KeyboardButton(text='страна-столица')
+dates_btn = KeyboardButton(text='даты, история РФ')
+legal_abbreviations_btn = KeyboardButton(text='правовые аббревиатуры')
+country_flag_btn = KeyboardButton(text='флаг-страна')
+capital_country_btn = KeyboardButton(text='столица-страна')
+literature_btn = KeyboardButton(text='литературные определения')
+architecture_btn = KeyboardButton(text='архитектура, понятия')
+astronomy_btn = KeyboardButton(text='астрономия, понятия')
+kb_subjects.add(country_capital_btn, dates_btn).add(legal_abbreviations_btn, country_flag_btn).add(capital_country_btn, literature_btn).add(architecture_btn, astronomy_btn)
 kb_menu_do_you_know = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-b8 = KeyboardButton(text = ('да💫'))
-b9 = KeyboardButton(text = ('нет👂'))
-kb_menu_do_you_know.add(b8, b9)
-b10 = KeyboardButton(text = ('как? 👀'))
+yes_star_btn = KeyboardButton(text=('да💫'))
+no_star_btn = KeyboardButton(text=('нет👂'))
+kb_menu_do_you_know.add(yes_star_btn, no_star_btn)
+how = KeyboardButton(text=('как? 👀'))
 kb_how = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-kb_how.add(b10)
-b11 = KeyboardButton(text = ('а есть примеры правил?🐺'))
+kb_how.add(how)
+b11 = KeyboardButton(text=('а есть примеры правил?🐺'))
 kb_start_show_examples = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_start_show_examples.add(b11)
-b12 = KeyboardButton(text = ('И как вы мне поможете разобраться❓'))
+b12 = KeyboardButton(text=('И как вы мне поможете разобраться❓'))
 kb_start_how_you_can_helpme = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_start_how_you_can_helpme.add(b12)
-b13 = KeyboardButton(text = ('Погнали!▶️'))
+b13 = KeyboardButton(text=('Погнали!▶️'))
 kb_start_no_finish = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_start_no_finish.add(b13)
 kb_menu_statistics = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-btoday = KeyboardButton(text = ('сегодня'))
-b7day = KeyboardButton(text = ('7 дней'))
+btoday = KeyboardButton(text=('сегодня'))
+b7day = KeyboardButton(text=('7 дней'))
 kb_menu_statistics.add(btoday, b7day)
 kb_startistics = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-b_byday = KeyboardButton(text = ('День'))
-b_bytheme = KeyboardButton(text = ('Тема'))
+b_byday = KeyboardButton(text=('День'))
+b_bytheme = KeyboardButton(text=('Тема'))
 kb_startistics.add(b_byday, b_bytheme)

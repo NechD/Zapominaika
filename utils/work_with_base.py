@@ -31,6 +31,7 @@ async def save_user_in_base(user_id: int, user_name: str, user_surname: str, use
 
 
 async def select_all_themes_from_base():
+    """Возвращает списком все темы из базы."""
     all_themes = cursor.execute('SELECT DISTINCT theme FROM questions_base').fetchall()
     all_themes = [i[0] for i in all_themes]
     print(all_themes)
@@ -38,6 +39,7 @@ async def select_all_themes_from_base():
 
 
 async def select_questions_for_theme(chosen_theme):
+    """Принимает тему, возвращает словарь вопрос-ответ по теме из базы."""
     cursor.execute(
         f"SELECT question_id, question, right_answer, link FROM questions_base WHERE theme = '{chosen_theme}'")
     dict_ques_answ = cursor.fetchall()
@@ -46,6 +48,10 @@ async def select_questions_for_theme(chosen_theme):
 
 
 async def show_my_rule(us_id, question_id):
+    """
+    Принимает id пользователя и вопроса.
+    Возвращает строку с мнемоническим правилом.
+    """
     user_rule_from_base = cursor.execute(f"SELECT mnemonic_rule FROM user_rules_2 WHERE user_id = "
                                          f"'{us_id}' AND question_id = '{question_id}'").fetchone()
     if not user_rule_from_base:
@@ -123,56 +129,71 @@ async def get_number_users_per_day(day):
     print(len(user_today))
     return (len(user_today))
 
+async def get_question_statistics(user_id, question_id):
+    """Возвращает статистику по конкретному вопросу для пользователя."""
+    return cursor.execute(
+        f"SELECT * "
+        f"FROM statistics_question "
+        f"WHERE user_id = '{user_id}' "
+        f"and question_id = '{question_id}'"
+    ).fetchall()
 
-async def add_question_to_base(user_id, question_id, quantity_right_answers, theme, quantity_answers=1):
-    today = date.today()
-    is_there_this_question = cursor.execute(f"SELECT * "
-                                            f"FROM statistics_question "
-                                            f"WHERE user_id = '{user_id}' "
-                                            f"and question_id = '{question_id}'").fetchall()
-    print(is_there_this_question)
-    if not is_there_this_question:
-        print('no question in base')
+async def add_user_question_statistic_to_base(
+    user_id: str,
+    question_id: str,
+    quantity_right_answers: int,
+    theme: str,
+    quantity_answers=1,
+):
+    """Добавляет статистику по ответу пользователя в базу."""
+    question_statistics = get_question_statistics(user_id, question_id)
+    if question_statistics:
+        question_statistics = question_statistics[0]
+        quantity_answers_in_base, quantity_right_answers_in_base = question_statistics[2], question_statistics[3]
         cursor.execute(
-            'INSERT INTO statistics_question (user_id, question_id, quantity_answers, quantity_right_answers,  theme) VALUES (?, ?,?, ?, ? )',
-            (user_id, question_id, quantity_answers, quantity_right_answers, theme))
+            f"UPDATE statistics_question"
+            f"SET quantity_answers = '{quantity_answers_in_base + quantity_answers}', "
+            f"quantity_right_answers = '{quantity_right_answers + quantity_right_answers_in_base}' "
+            f"WHERE user_id  = '{user_id}' AND question_id  = '{question_id}'",
+        )
         conn.commit()
-        print("user and his question add to base")
     else:
-        user_id, question_id, quantity_answers_in_base, quantity_right_answers_in_base, theme = is_there_this_question[
-            0]
-        quantity_right_answers_final = quantity_right_answers + quantity_right_answers_in_base
-        quantity_answers_final = quantity_answers_in_base + quantity_answers
-        print(f'quantity_answers_final {quantity_answers_final}')
         cursor.execute(
-            f"UPDATE statistics_question SET quantity_answers = '{quantity_answers_final}', quantity_right_answers = '{quantity_right_answers_final}' "
-            f"WHERE user_id  = '{user_id}' AND question_id  = '{question_id}'")
+            'INSERT INTO statistics_question (user_id, question_id, quantity_answers, quantity_right_answers, theme) '
+            'VALUES (?, ?,?, ?, ? )',
+            (user_id, question_id, quantity_answers, quantity_right_answers, theme,)
+        )
         conn.commit()
 
 
 async def get_statistics_right_answers(user_id, theme):
-    select_from_base = cursor.execute(f"SELECT question_id "
-                                      f"FROM statistics_question "
-                                      f"WHERE user_id = '{user_id}' and (quantity_right_answers/quantity_answers) > 0.5 "
-                                      f"AND theme = '{theme}'").fetchall()
+    """Возвращает пользователю статистику правильных ответов по теме."""
+    select_from_base = cursor.execute(
+        f"SELECT question_id "
+        f"FROM statistics_question "
+        f"WHERE user_id = '{user_id}' and (quantity_right_answers/quantity_answers) > 0.5"
+        f"AND theme = '{theme}'"
+    ).fetchall()
     return select_from_base
 
 
-# all_questions = len(cursor.execute(f"SELECT question_id FROM questions_base WHERE theme = '{theme}'").fetchall())
-# return (right_answers*100/all_questions)
-
 async def get_statistics_all_answers(user_id, theme):
-    select_from_base_all_answers = cursor.execute(f"SELECT question_id "
-                                                  f"FROM statistics_question "
-                                                  f"WHERE user_id = '{user_id}'"
-                                                  f"AND theme = '{theme}'").fetchall()
+    """Возвращает пользователю статистику правильных ответов по всем темам."""
+    select_from_base_all_answers = cursor.execute(
+        f"SELECT question_id "
+        f"FROM statistics_question "
+        f"WHERE user_id = '{user_id}'"
+        f"AND theme = '{theme}'"
+    ).fetchall()
     return select_from_base_all_answers
 
 
 async def get_statistics_get_all_questions(user_id, theme):
-    all_questions = cursor.execute(f"SELECT question_id "
-                                   f"FROM questions_base "
-                                   f"WHERE theme = '{theme}'").fetchall()
+    all_questions = cursor.execute(
+        f"SELECT question_id "
+        f"FROM questions_base "
+        f"WHERE theme = '{theme}'"
+    ).fetchall()
     print(all_questions)
     return all_questions
 
