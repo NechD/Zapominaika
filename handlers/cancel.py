@@ -1,4 +1,4 @@
-from utils.Keyboards import *
+from utils.keyboards import *
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 

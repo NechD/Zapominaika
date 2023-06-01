@@ -1,4 +1,4 @@
-from utils.Keyboards import *
+from utils.keyboards import *
 from utils.work_with_base import *
 from aiogram.dispatcher import FSMContext
 from aiogram import Dispatcher, types
@@ -104,7 +104,7 @@ async def asking(message: types.Message, state: FSMContext):
                                           f' \n'
                                           f'{gv.question_formulate} "{gv.question}"? \n'
                                           ), reply_markup=correct_kb)
-        await add_question_to_base(us_id, gv.question_id, 1, gv.chosen_theme, quantity_answers=1)
+        await add_user_question_statistic_to_base(us_id, gv.question_id, 1, gv.chosen_theme, quantity_answers=1)
         await state.finish()
     else:
         global user_rule_from_base
@@ -157,7 +157,7 @@ async def answer_check(callback: types.CallbackQuery, state: FSMContext):
     await state.finish()
     await callback.message.reply(emojis.encode(f'Ответ: {gv.right_answer} \n'
                                                ), reply_markup=correct_kb)
-    await add_question_to_base(gv.us_id, gv.question_id, 0, gv.chosen_theme, quantity_answers=1)
+    await add_user_question_statistic_to_base(gv.us_id, gv.question_id, 0, gv.chosen_theme, quantity_answers=1)
     await callback.answer()
 
 

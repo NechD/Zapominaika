@@ -1,4 +1,4 @@
-from utils.Keyboards import *
+from utils.keyboards import *
 from utils.work_with_base import *
 from aiogram import Dispatcher, types
 from utils.create_bot import bot
